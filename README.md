@@ -1,14 +1,14 @@
-# 📬 Cloud Mail Flare
+# 📬 Cloud Mail Naufal
 
-> Aplikasi web email pribadi yang berjalan 100% di atas infrastruktur Cloudflare — **gratis**, **cepat**, dan **aman**.
+> Aplikasi web email pribadi berbasis SvelteKit yang berjalan 100% di atas infrastruktur Cloudflare: gratis, cepat, dan aman. Dikembangkan dan ditingkatkan dari proyek [kelasdev/cloud-mail-flare](https://github.com/kelasdev/cloud-mail-flare).
 
 ---
 
-## 🧐 Apa itu Cloud Mail Flare?
+## 🧐 Apa itu Cloud Mail Naufal?
 
-**Cloud Mail Flare** adalah aplikasi manajemen email berbasis web yang Anda host sendiri (self-hosted) menggunakan layanan **Cloudflare** (gratis). Anda bisa membuat kotak masuk (inbox) email dengan domain sendiri, mengelola pengguna, dan menerima notifikasi email langsung ke **Telegram**.
+**Cloud Mail Naufal** adalah aplikasi manajemen email berbasis web self-hosted menggunakan layanan **Cloudflare** gratis. Anda bisa membuat kotak masuk (inbox) email dengan domain sendiri (`email.naufalputra.my.id`), mengelola pengguna, menulis/mengirim email, dan menerima notifikasi email langsung ke **Telegram**.
 
-Seluruh aplikasi berjalan sebagai satu **Cloudflare Worker** — tidak perlu server VPS, tidak perlu bayar hosting mahal.
+Seluruh aplikasi berjalan sebagai satu **Cloudflare Worker** tanpa perlu server VPS atau hosting berbayar.
 
 ---
 
@@ -190,12 +190,27 @@ cloud-mail-flare/
 - Hapus pengguna hanya bisa dilakukan jika tidak ada data email atau sesi login yang masih terhubung.
 - `schema.sql` adalah sumber kebenaran (source of truth) untuk struktur database, jangan diubah sembarangan.
 
+## 🔄 Perbedaan & Peningkatan dari Versi Asli (`kelasdev/cloud-mail-flare`)
+
+Versi ini merupakan pengembangan lebih lanjut dari repository upstream [kelasdev/cloud-mail-flare](https://github.com/kelasdev/cloud-mail-flare) dengan sejumlah penambahan fitur, peningkatan estetika, dan otomatisasi:
+
+| Aspek | Versi Asli (`kelasdev`) | Versi Peningkatan (`cloud-mail-naufal`) |
+| :--- | :--- | :--- |
+| **Sistem Desain UI** | Tema default biru generik dengan rounded besar | Sistem desain **Superhuman** via `awesome-design-md` (Warm Canvas `#fafaf8` & Ink `#292827` di mode terang, Deep Indigo Navy `#1b1938` & Soft Violet `#9d85f7` di mode gelap, tight 6-8px border radius) |
+| **Standar Kualitas & Aksesibilitas** | Belum ada filter gaya bawaan AI | Mengadopsi standar **`antislop`** (Kontras WCAG AA 4.5:1, `focus-visible` keyboard rings, tap target min. 44px, bebas em dash dan AI slop) |
+| **Fitur Pengiriman Email** | Hanya menerima email (Inbound only) | Ditambahkan integrasi **Resend API** (`/api/me/send/`, `resend.service.ts`, dan modal compose email) untuk mengirim email keluar |
+| **Viewer Email (`EmailBodyViewer`)** | Parsing body standar | Peningkatan rendering HTML/teks, pembersihan sanitasi, dan mitigasi escape markdown |
+| **Otomatisasi Deployment** | Deploy manual lewat CLI | Dilengkapi alur **GitHub Actions CI/CD** (`.github/workflows/deploy.yml`) untuk build dan deploy otomatis saat `git push` |
+| **Konfigurasi Domain** | Konfigurasi bawaan template | Terhubung langsung dengan custom domain production `https://email.naufalputra.my.id` dan database D1 `naufal-myid` |
+
 ---
 
 ## 🎖️ Kredit & Penghargaan (Credits)
 
-Antarmuka dan kualitas sistem pada proyek ini mengadopsi standar desain modern dari komunitas open-source:
+Proyek ini dibangun dan dikembangkan berkat karya luar biasa dari komunitas open-source:
 
+- **[kelasdev/cloud-mail-flare](https://github.com/kelasdev/cloud-mail-flare)**: Proyek dasar dan arsitektur pondasi webmail pribadi di atas Cloudflare Workers, SvelteKit, D1, dan Cloudflare Email Routing.
 - **[VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)**: Panduan sistem desain dan token visual terinspirasi dari spesifikasi klien email **Superhuman** ([`DESIGN.md`](./DESIGN.md)).
-- **[antislop](https://github.com/naufalirfan)**: Standar kebersihan kode antarmuka, kepatuhan kontras aksesibilitas WCAG AA, dan eliminasi pola visual generik AI.
+- **[antislop](https://github.com/naufalirfan)**: Standar kebersihan kode antarmuka, kepatuhan kontras aksesibilitas WCAG AA, navigasi ramah keyboard, dan eliminasi pola visual generik AI.
+
 
