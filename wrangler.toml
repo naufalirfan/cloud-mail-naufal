@@ -1,0 +1,21 @@
+name = "cloud-mail-myid"
+main = ".svelte-kit/cloudflare/_worker.js"
+compatibility_date = "2026-07-15"
+compatibility_flags = ["nodejs_compat", "nodejs_als"]
+
+[[routes]]
+pattern = "email.naufalputra.my.id"
+custom_domain = true
+
+[assets]
+directory = ".svelte-kit/cloudflare"
+binding = "ASSETS"
+
+[vars]
+MAILFLARE_USER_DOMAIN = "naufalputra.my.id"
+MAILFLARE_NOTIFY_URL = "https://email.naufalputra.my.id"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "naufal-myid"
+database_id = "d6209d2d-6d9c-4e49-bf10-6ed68bdab718"
