@@ -1,0 +1,59 @@
+<script lang="ts">
+  import { invalidateAll } from '$app/navigation';
+  import AppSidebar from '$lib/components/organisms/AppSidebar.svelte';
+  import AppTopbar from '$lib/components/organisms/AppTopbar.svelte';
+  import UserListPanel from '$lib/components/organisms/UserListPanel.svelte';
+  import { page } from '$app/stores';
+  import { sidebarCollapsed } from '$lib/stores/ui.store';
+  import type { PageData } from './$types';
+
+  export let data: PageData;
+  $: adminEmail = $page.data.sessionEmail ?? null;
+
+  let searchQuery = '';
+
+  $: normalizedQuery = searchQuery.trim().toLowerCase();
+  $: filteredUsers = normalizedQuery
+    ? data.users.filter((user) =>
+        [user.displayName, user.email, user.role, user.status].some((field) =>
+          field.toLowerCase().includes(normalizedQuery)
+        )
+      )
+    : data.users;
+
+  async function handleUserCreated() {
+    await invalidateAll();
+  }
+
+  async function handleUserChanged() {
+    await invalidateAll();
+  }
+</script>
+
+<div class="layout-shell">
+  <AppSidebar active="users" adminEmail={adminEmail} />
+  <section class="main" class:sidebar-collapsed={$sidebarCollapsed}>
+    <AppTopbar
+      title="User List"
+      variant="minimal"
+      showSearch={false}
+      showRefresh={false}
+      showLogout={false}
+    />
+    <div class="content">
+      <UserListPanel users={filteredUsers} on:usercreated={handleUserCreated} on:userchanged={handleUserChanged} />
+    </div>
+  </section>
+</div>
+
+<style>
+  .content {
+    padding: var(--space-5);
+  }
+
+  @media (max-width: 960px) {
+    .content {
+      padding: var(--space-4) var(--space-3);
+    }
+  }
+</style>
